@@ -1,0 +1,201 @@
+{
+  "name": "interview prep",
+  "nodes": [
+    {
+      "name": "introduction",
+      "type": "conversation",
+      "isStart": true,
+      "metadata": {
+        "position": {
+          "x": -575.3202525972822,
+          "y": -315.77160623754924
+        }
+      },
+      "prompt": "Greet the user. Inform them that you will get some information from them, to create a perfect interview. Ask the caller for data required to extract. Ask the questions one by one, and await an answer.",
+      "variableExtractionPlan": {
+        "output": [
+          {
+            "title": "level",
+            "description": "The job experience level. ",
+            "type": "string",
+            "enum": [
+              "entry",
+              "mid",
+              "senior"
+            ]
+          },
+          {
+            "title": "amount",
+            "description": "How many questions would you like to generate? ",
+            "type": "number",
+            "enum": []
+          },
+          {
+            "title": "techstack",
+            "description": " A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on…",
+            "type": "string",
+            "enum": []
+          },
+          {
+            "title": "role",
+            "description": "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
+            "type": "string",
+            "enum": []
+          },
+          {
+            "title": "type",
+            "description": "What type of the interview should it be? ",
+            "type": "string",
+            "enum": []
+          }
+        ]
+      },
+      "messagePlan": {
+        "firstMessage": "Hey there!"
+      },
+      "toolIds": []
+    },
+    {
+      "name": "apiRequest_1770286179714",
+      "type": "tool",
+      "metadata": {
+        "position": {
+          "x": -586.2223351540504,
+          "y": 236.76118471276675
+        }
+      },
+      "tool": {
+        "type": "apiRequest",
+        "function": {
+          "name": "api_request_tool",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
+        },
+        "messages": [
+          {
+            "type": "request-start",
+            "content": "Please hold on. i'm sending a request to the app.",
+            "blocking": true
+          },
+          {
+            "type": "request-complete",
+            "content": "The Request has been sent and your interview has been genrated. Thank you for the call! Bye!.",
+            "role": "assistant",
+            "endCallAfterSpokenEnabled": true
+          },
+          {
+            "type": "request-failed",
+            "content": "oops! Looks like something went wrong when sending the data to the app! Please try again.",
+            "endCallAfterSpokenEnabled": true
+          }
+        ],
+        "name": "getUserData",
+        "url": "https://ai-mock-interviews-8oyr.vercel.app/api/vapi/generate",
+        "method": "POST",
+        "encryptedPaths": null,
+        "headers": null,
+        "body": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "description": "",
+              "default": "{{ role }}"
+            },
+            "type": {
+              "type": "string",
+              "description": "",
+              "default": "{{type}}"
+            },
+            "level": {
+              "type": "string",
+              "description": "",
+              "default": "{{ level }}"
+            },
+            "amount": {
+              "type": "number",
+              "description": "",
+              "default": "{{ amount }}"
+            },
+            "userid": {
+              "type": "string",
+              "description": "",
+              "default": "{{ userid }}"
+            },
+            "techstack": {
+              "type": "string",
+              "description": "",
+              "default": "{{techstack}}"
+            }
+          },
+          "required": [
+            "role",
+            "type",
+            "level",
+            "amount",
+            "userid",
+            "techstack"
+          ]
+        },
+        "variableExtractionPlan": {
+          "schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "aliases": []
+        }
+      }
+    },
+    {
+      "name": "hangup_1770288192821",
+      "type": "tool",
+      "metadata": {
+        "position": {
+          "x": -521.936643725393,
+          "y": 503.82053913476034
+        }
+      },
+      "tool": {
+        "type": "endCall",
+        "function": {
+          "name": "untitled_tool",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
+        },
+        "messages": [
+          {
+            "type": "request-start",
+            "content": "Everything has been generated. I'll redirect you to the dashboard now, thanks for the call!. ",
+            "blocking": true
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "introduction",
+      "to": "apiRequest_1770286179714",
+      "condition": {
+        "type": "ai",
+        "prompt": "If user provided all the variables."
+      }
+    },
+    {
+      "from": "apiRequest_1770286179714",
+      "to": "hangup_1770288192821",
+      "condition": {
+        "type": "ai",
+        "prompt": ""
+      }
+    }
+  ],
+  "globalPrompt": "You are a voice assistant helping with creating new AI interviewers. Your task is to collect data from the user. Remember that this is a voice conversation - do not use any special characters."
+}

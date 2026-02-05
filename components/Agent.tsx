@@ -118,12 +118,17 @@ const Agent = ({
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-        variableValues: {
-          username: userName,
-          userid: userId,
-        },
-      });
+      console.log("Starting Vapi with Workflow ID:", process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID);
+      try {
+        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+          variableValues: {
+            username: userName,
+            userid: userId,
+          },
+        });
+      } catch (err) {
+        console.error("Vapi Start Error:", err);
+      }
     } else {
       let formattedQuestions = "";
       if (questions) {

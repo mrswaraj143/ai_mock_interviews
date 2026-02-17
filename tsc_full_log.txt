@@ -1,0 +1,9 @@
+app/(root)/interview/page.tsx(14,9): error TS2322: Type '{ userName: string; userId: string | undefined; profileImage: any; type: "generate"; }' is not assignable to type 'IntrinsicAttributes & AgentProps'.
+  Property 'profileImage' does not exist on type 'IntrinsicAttributes & AgentProps'.
+app/(root)/interview/page.tsx(14,29): error TS2339: Property 'profileURL' does not exist on type 'User'.
+app/api/vapi/generate/route.ts(12,7): error TS2322: Type 'LanguageModelV1' is not assignable to type 'LanguageModel'.
+  Type 'LanguageModelV1' is not assignable to type '(string & {}) | LanguageModelV3 | LanguageModelV2'.
+    Property 'supportedUrls' is missing in type 'LanguageModelV1' but required in type 'LanguageModelV2'.
+lib/actions/general.action.ts(21,7): error TS2322: Type 'LanguageModelV1' is not assignable to type 'LanguageModel'.
+  Type 'LanguageModelV1' is not assignable to type '(string & {}) | LanguageModelV3 | LanguageModelV2'.
+    Property 'supportedUrls' is missing in type 'LanguageModelV1' but required in type 'LanguageModelV2'.
